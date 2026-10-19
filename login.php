@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . "/config.php";
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +36,19 @@
                 <p class="text-muted small">Sign in to manage your students and classes</p>
             </div>
 
-            <form action="handle_login.php" method="POST">
+            <?php if (!empty($errors)) { ?>
+                <div class="alert alert-danger">
+                    <ul>
+                        <?php foreach ($errors as $error) { ?>
+                            <li><?= $error ?></li>
+                        <?php } ?>
+                    </ul>
+
+                </div>
+
+            <?php } ?>
+
+            <form action="./handle_login.php" method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label small fw-semibold text-secondary">Email Address</label>
                     <div class="input-group">
