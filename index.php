@@ -1,3 +1,9 @@
+<?php
+
+require_once __DIR__ . "/auth.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,7 +83,7 @@
                     <h6 class="mb-0 text-truncate fs-6 fw-semibold">Sarah Jenkins</h6>
                     <small class="text-muted text-truncate d-block">Class Teacher</small>
                 </div>
-                <a href="login.html" class="text-danger p-1" title="Log Out">
+                <a href="logout.php" class="text-danger p-1" title="Log Out">
                     <i class="bi bi-box-arrow-right fs-5"></i>
                 </a>
             </div>
@@ -120,7 +126,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item py-2 text-danger" href="login.html"><i
+                            <li><a class="dropdown-item py-2 text-danger" href="logout.php"><i
                                         class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                         </ul>
                     </div>
