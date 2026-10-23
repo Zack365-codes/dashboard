@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD']  == "POST") {
     if(strlen($password) < 8){
         $errors[] = "Password's length must be greater than 8";
     }
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
+    if (filter_var($email , FILTER_VALIDATE_EMAIL) == false) {
         $errors[] = "Email address is incorrect";
     }
     if (!empty($errors)) {
