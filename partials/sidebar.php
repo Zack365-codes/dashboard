@@ -1,5 +1,5 @@
    <aside class="sidebar">
-            <a href="dashboard.html" class="sidebar-brand">
+            <a href="index.php" class="sidebar-brand">
                 <i class="bi bi-mortarboard-fill fs-3 text-primary"></i>
                 <span>EduClass</span>
             </a>

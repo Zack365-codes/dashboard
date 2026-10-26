@@ -44,7 +44,7 @@ $success = $_SESSION['success'] ?? [];
                 </div>
 
                 <div class="d-flex align-items-center gap-3">
-                    <a href="students.html" class="btn btn-sm btn-outline-secondary d-none d-sm-inline-flex align-items-center gap-1">
+                    <a href="students.php" class="btn btn-sm btn-outline-secondary d-none d-sm-inline-flex align-items-center gap-1">
                         <i class="bi bi-arrow-left"></i> Back to List
                     </a>
                 </div>
