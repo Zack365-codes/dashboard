@@ -171,11 +171,12 @@ $total = $ts_row[0]['total_students'];
                                     <th>Class</th>
                                     <th>Gender</th>
                                     <th>Phone</th>
+                                    <th>Date of birth</th>
                                     <th>Status</th>
                                     <th class="text-end">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                             <tbody>
                                 <?php if (mysqli_num_rows($result) == 0) { ?>
                                     <tr>
                                         <td>No student found</td>
@@ -194,9 +195,10 @@ $total = $ts_row[0]['total_students'];
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><span class="badge bg-light text-dark border"><?= $single_student['phone'] ?></span></td>
+                                            <td><span class="badge bg-light text-dark border"><?= $single_student['roll_number'] ?></span></td>
                                             <td><?= $single_student['class'] ?></td>
                                             <td><?= $single_student['gender'] ?></td>
+                                            <td><?= $single_student['phone'] ?></td>
                                             <td><?= $single_student['dob'] ?></td>
                                             <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><?= $single_student['status'] ?></span></td>
                                             <td class="text-end">

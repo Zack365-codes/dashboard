@@ -16,6 +16,7 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
 // exit;
 $search = $_GET['search'] ?? '';
 $class = $_GET['class'] ?? '';
+$status = $_GET['status'] ?? '';
 
 // echo $search;
 // exit;
@@ -28,6 +29,10 @@ if ($class != '') {
 }
 // echo $q;
 // exit;
+
+if($status != ''){
+    $q .= " AND status = '$status' ";
+}
 
 $result = mysqli_query($conn, $q);
 $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -112,7 +117,7 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <h4 class="fw-bold mb-1">Students Directory</h4>
                         <p class="text-muted small mb-0">View, search, and manage all registered class students</p>
                     </div>
-                    <a href="student-create.html" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                    <a href="student-create.php" class="btn btn-primary d-inline-flex align-items-center gap-2">
                         <i class="bi bi-person-plus"></i>
                         <span>Add Student</span>
                     </a>
@@ -138,14 +143,14 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-2">
-                                    <select class="form-select">
+                                    <select class="form-select" name="status">
                                         <option value="">All Statuses</option>
                                         <option value="active">Active</option>
                                         <option value="pending">Pending</option>
                                         <option value="inactive">Inactive</option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-2 d-grid">
+                                <div class="col-12 col-md-2 d-grid d-flex gap-4">
                                     <button type="submit" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1">
                                         <i class="bi bi-arrow-clockwise"></i> Search
                                     </button>
@@ -169,6 +174,7 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                     <th>Class</th>
                                     <th>Gender</th>
                                     <th>Phone</th>
+                                    <th>Date of birth</th>
                                     <th>Status</th>
                                     <th class="text-end">Actions</th>
                                 </tr>
@@ -187,20 +193,21 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                                 <div class="d-flex align-items-center gap-2">
                                                     <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Alex">
                                                     <div>
-                                                        <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none"><?= $single_student['first_name']  . " " . $single_student['last_name']  ?></a>
+                                                        <a href="student-detail.php" class="fw-semibold text-dark text-decoration-none"><?= $single_student['first_name']  . " " . $single_student['last_name']  ?></a>
                                                         <div class="small text-muted"><?= $single_student['email'] ?></div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><span class="badge bg-light text-dark border"><?= $single_student['phone'] ?></span></td>
+                                            <td><span class="badge bg-light text-dark border"><?= $single_student['roll_number'] ?></span></td>
                                             <td><?= $single_student['class'] ?></td>
                                             <td><?= $single_student['gender'] ?></td>
+                                            <td><?= $single_student['phone'] ?></td>
                                             <td><?= $single_student['dob'] ?></td>
                                             <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><?= $single_student['status'] ?></span></td>
                                             <td class="text-end">
                                                 <div class="d-inline-flex gap-1">
-                                                    <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                                    <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
+                                                    <a href="student-detail.php" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
+                                                    <a href="student-edit.php" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
                                                     <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
                                                 </div>
                                             </td>
