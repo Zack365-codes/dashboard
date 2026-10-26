@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/config.php";
 require_once __DIR__ . "/db.php";
+require_once __DIR__ . "/auth.php";
 
 $q = "SELECT * FROM personal_info INNER JOIN
  acadamic_info ON 
@@ -8,14 +9,34 @@ $q = "SELECT * FROM personal_info INNER JOIN
 $result = mysqli_query($conn, $q);
 
 $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//  echo "<pre>";
-// print_r($data);
+// echo "<pre>";
+// print_r($_GET);
 // echo "</pre>";
 
 // exit;
+$search = $_GET['search'] ?? '';
+$class = $_GET['class'] ?? '';
+
+// echo $search;
+// exit;
+
+if ($search != '') {
+    $q .= "  WHERE (personal_info.first_name = '$search' OR personal_info.last_name = '$search' OR personal_info.email='$search' OR acadamic_info.roll_number='$search' )";
+}
+if ($class != '') {
+    $q .= " AND class = '$class' ";
+}
+// echo $q;
+// exit;
+
+$result = mysqli_query($conn, $q);
+$data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 
-
+// echo "<pre>";
+// print_r($_GET);
+// echo "</pre>";
+// exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +64,7 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         <?php require_once __DIR__ . "/partials/sidebar.php" ?>
 
+        
         <!-- Main Content Area -->
         <div class="main-wrapper">
             <!-- Top Header Navbar -->
@@ -97,39 +119,44 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 </div>
 
                 <!-- Filters & Search Toolbar -->
-                <div class="card-custom p-3 mb-4">
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-12 col-md-5">
-                                <div class="input-group">
-                                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
-                                    <input name="search" type="text" class="form-control border-start-0 ps-0" placeholder="Search by name, email or roll...">
+                <form method="GET">
+                    <div class="card-custom p-3 mb-4">
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-5">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                                        <input name="search" value="<?= $search ?>" type="text" class="form-control border-start-0 ps-0" placeholder="Search by name, email or roll...">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <select class="form-select" name="class">
+                                        <option value="">All Classes</option>
+                                        <option value="10-A">Grade 10-A</option>
+                                        <option value="10-B">Grade 10-B</option>
+                                        <option value="11-A">Grade 11-A</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 col-md-2">
+                                    <select class="form-select">
+                                        <option value="">All Statuses</option>
+                                        <option value="active">Active</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-2 d-grid">
+                                    <button type="submit" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1">
+                                        <i class="bi bi-arrow-clockwise"></i> Search
+                                    </button>
+                                    <a href="students.php" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1 text-decoration-none">
+                                        <i class="bi bi-arrow-clockwise"></i> Reset
+                                    </a>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-3">
-                                <select class="form-select">
-                                    <option value="">All Classes</option>
-                                    <option value="10-A">Grade 10-A</option>
-                                    <option value="10-B">Grade 10-B</option>
-                                    <option value="11-A">Grade 11-A</option>
-                                </select>
-                            </div>
-                            <div class="col-6 col-md-2">
-                                <select class="form-select">
-                                    <option value="">All Statuses</option>
-                                    <option value="active">Active</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
-                            </div>
-                            <div class="col-12 col-md-2 d-grid">
-                                <button class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1">
-                                    <i class="bi bi-arrow-clockwise"></i> Reset
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                </form>
 
                 <!-- Students Table Card -->
                 <div class="card-custom overflow-hidden">
@@ -160,7 +187,7 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                                 <div class="d-flex align-items-center gap-2">
                                                     <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Alex">
                                                     <div>
-                                                        <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none"><?=  $single_student['first_name']  . " " . $single_student['last_name']  ?></a>
+                                                        <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none"><?= $single_student['first_name']  . " " . $single_student['last_name']  ?></a>
                                                         <div class="small text-muted"><?= $single_student['email'] ?></div>
                                                     </div>
                                                 </div>

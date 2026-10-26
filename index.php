@@ -1,9 +1,29 @@
 <?php
-
+require_once __DIR__ . "/config.php";
+require_once __DIR__ . "/db.php";
 require_once __DIR__ . "/auth.php";
 
-?>
 
+$q = "SELECT * FROM personal_info 
+INNER JOIN acadamic_info ON personal_info.student_id = acadamic_info.student_id 
+ORDER BY personal_info.student_id ASC 
+LIMIT 4;";
+
+$result = mysqli_query($conn, $q);
+$data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+$result = mysqli_query($conn, $q);
+$data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+// query to find the total students
+$q_ts = "SELECT COUNT(*) AS total_students FROM personal_info;";
+$q_tsresult = mysqli_query($conn, $q_ts);
+$ts_row = mysqli_fetch_all($q_tsresult, MYSQLI_ASSOC);
+$total = $ts_row[0]['total_students'];
+// echo $total;
+// exit;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,8 +48,8 @@ require_once __DIR__ . "/auth.php";
 
     <div class="app-container">
         <!-- Sidebar Navigation -->
-         <?php require_once __DIR__ . "/partials/sidebar.php" ?>
-     
+        <?php require_once __DIR__ . "/partials/sidebar.php" ?>
+
 
         <!-- Main Content Area -->
         <div class="main-wrapper">
@@ -101,7 +121,7 @@ require_once __DIR__ . "/auth.php";
                             </div>
                             <div>
                                 <span class="text-muted small d-block">Total Students</span>
-                                <h3 class="fw-bold mb-0">142</h3>
+                                <h3 class="fw-bold mb-0"> <?php echo $total ?>  </h3>
                             </div>
                         </div>
                     </div>
@@ -141,131 +161,78 @@ require_once __DIR__ . "/auth.php";
                 </div>
 
                 <!-- Recent Students & Schedule Grid -->
-                <div class="row g-4">
-                    <!-- Recent Students Table -->
-                    <div class="col-12 col-lg-12">
-                        <div class="card-custom">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span class="fw-bold text-dark">Recently Enrolled Students</span>
-                                <a href="students.html" class="small text-primary text-decoration-none fw-semibold">View
-                                    All</a>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-custom align-middle">
-                                    <thead>
-                                        <tr>
-                                            <th>Student</th>
-                                            <th>Roll No</th>
-                                            <th>Grade</th>
-                                            <th>Status</th>
-                                            <th class="text-end">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop&crop=faces"
-                                                        class="avatar-sm rounded-circle" alt="Alex">
-                                                    <div>
-                                                        <div class="fw-semibold">Alex Rivera</div>
-                                                        <small class="text-muted">alex.r@school.edu</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-light text-dark border">#1024</span></td>
-                                            <td>Grade 10-A</td>
-                                            <td><span
-                                                    class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span>
-                                            </td>
-                                            <td class="text-end">
-                                                <a href="student-detail.html"
-                                                    class="btn btn-sm btn-light border p-1 px-2" title="View"><i
-                                                        class="bi bi-eye"></i></a>
-                                                <a href="student-edit.html"
-                                                    class="btn btn-sm btn-light border p-1 px-2 ms-1" title="Edit"><i
-                                                        class="bi bi-pencil"></i></a>
-                                            </td>
-                                        </tr>
+                <div class="card-custom overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table table-custom align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Roll No</th>
+                                    <th>Class</th>
+                                    <th>Gender</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (mysqli_num_rows($result) == 0) { ?>
+                                    <tr>
+                                        <td>No student found</td>
+                                    </tr>
+                                <?php } ?>
+
+                                <?php if (mysqli_num_rows($result) > 0) { ?>
+                                    <?php foreach ($data as $single_student) { ?>
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&crop=faces"
-                                                        class="avatar-sm rounded-circle" alt="Emma">
+                                                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Alex">
                                                     <div>
-                                                        <div class="fw-semibold">Emma Watson</div>
-                                                        <small class="text-muted">emma.w@school.edu</small>
+                                                        <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none"><?= $single_student['first_name']  . " " . $single_student['last_name']  ?></a>
+                                                        <div class="small text-muted"><?= $single_student['email'] ?></div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><span class="badge bg-light text-dark border">#1025</span></td>
-                                            <td>Grade 10-A</td>
-                                            <td><span
-                                                    class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span>
-                                            </td>
+                                            <td><span class="badge bg-light text-dark border"><?= $single_student['phone'] ?></span></td>
+                                            <td><?= $single_student['class'] ?></td>
+                                            <td><?= $single_student['gender'] ?></td>
+                                            <td><?= $single_student['dob'] ?></td>
+                                            <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><?= $single_student['status'] ?></span></td>
                                             <td class="text-end">
-                                                <a href="student-detail.html"
-                                                    class="btn btn-sm btn-light border p-1 px-2" title="View"><i
-                                                        class="bi bi-eye"></i></a>
-                                                <a href="student-edit.html"
-                                                    class="btn btn-sm btn-light border p-1 px-2 ms-1" title="Edit"><i
-                                                        class="bi bi-pencil"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces"
-                                                        class="avatar-sm rounded-circle" alt="Liam">
-                                                    <div>
-                                                        <div class="fw-semibold">Liam Vance</div>
-                                                        <small class="text-muted">liam.v@school.edu</small>
-                                                    </div>
+                                                <div class="d-inline-flex gap-1">
+                                                    <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
+                                                    <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
+                                                    <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
                                                 </div>
                                             </td>
-                                            <td><span class="badge bg-light text-dark border">#1026</span></td>
-                                            <td>Grade 10-B</td>
-                                            <td><span
-                                                    class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1">Pending</span>
-                                            </td>
-                                            <td class="text-end">
-                                                <a href="student-detail.html"
-                                                    class="btn btn-sm btn-light border p-1 px-2" title="View"><i
-                                                        class="bi bi-eye"></i></a>
-                                                <a href="student-edit.html"
-                                                    class="btn btn-sm btn-light border p-1 px-2 ms-1" title="Edit"><i
-                                                        class="bi bi-pencil"></i></a>
-                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces"
-                                                        class="avatar-sm rounded-circle" alt="Sophia">
-                                                    <div>
-                                                        <div class="fw-semibold">Sophia Martinez</div>
-                                                        <small class="text-muted">sophia.m@school.edu</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-light text-dark border">#1027</span></td>
-                                            <td>Grade 10-A</td>
-                                            <td><span
-                                                    class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span>
-                                            </td>
-                                            <td class="text-end">
-                                                <a href="student-detail.html"
-                                                    class="btn btn-sm btn-light border p-1 px-2" title="View"><i
-                                                        class="bi bi-eye"></i></a>
-                                                <a href="student-edit.html"
-                                                    class="btn btn-sm btn-light border p-1 px-2 ms-1" title="Edit"><i
-                                                        class="bi bi-pencil"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                    <?php } ?>
+
+                                <?php } ?>
+
+
+
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div>
+                        <small class="text-muted  p-3 border-top d-flex flex-wrap justify-content-between align-items-center"> <strong>Showing Top 4 newly added Students</strong>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pagination-sm mb-0">
+                                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
                     </div>
                 </div>
             </main>
