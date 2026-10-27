@@ -121,7 +121,7 @@ $total = $ts_row[0]['total_students'];
                             </div>
                             <div>
                                 <span class="text-muted small d-block">Total Students</span>
-                                <h3 class="fw-bold mb-0"> <?php echo $total ?>  </h3>
+                                <h3 class="fw-bold mb-0"> <?php echo $total ?> </h3>
                             </div>
                         </div>
                     </div>
@@ -176,7 +176,7 @@ $total = $ts_row[0]['total_students'];
                                     <th class="text-end">Actions</th>
                                 </tr>
                             </thead>
-                             <tbody>
+                            <tbody>
                                 <?php if (mysqli_num_rows($result) == 0) { ?>
                                     <tr>
                                         <td>No student found</td>
@@ -204,8 +204,8 @@ $total = $ts_row[0]['total_students'];
                                             <td class="text-end">
                                                 <div class="d-inline-flex gap-1">
                                                     <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                                    <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
-                                                    <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
+                                                    <a href="student-edit.php" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
+                                                    <a href="delete_handle.php?id=<?= $single_student['student_id'] ?>" class="btn btn-sm btn-light border p-1 px-2 text-danger" title="Delete"><i class="bi bi-trash"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

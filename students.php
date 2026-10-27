@@ -30,7 +30,7 @@ if ($class != '') {
 // echo $q;
 // exit;
 
-if($status != ''){
+if ($status != '') {
     $q .= " AND status = '$status' ";
 }
 
@@ -42,6 +42,16 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
 // print_r($_GET);
 // echo "</pre>";
 // exit;
+
+
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
+
+$sucess = $_SESSION['success'] ?? '';
+unset($_SESSION['success']);
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +79,7 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         <?php require_once __DIR__ . "/partials/sidebar.php" ?>
 
-        
+
         <!-- Main Content Area -->
         <div class="main-wrapper">
             <!-- Top Header Navbar -->
@@ -163,6 +173,25 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </div>
                 </form>
 
+
+                <?php if (!empty($errors)) { ?>
+                    <div class="alert alert-danger">
+                        <ul>
+                            <?php foreach ($errors as $error) { ?>
+                                <li><?= $error ?></li>
+                            <?php } ?>
+                        </ul>
+
+                    </div>
+
+                <?php } ?>
+
+                <?php if ($sucess) { ?>
+                    <div class="alert alert-success">
+                        <?php echo $sucess ?>
+                    </div>
+                <?php } ?>
+
                 <!-- Students Table Card -->
                 <div class="card-custom overflow-hidden">
                     <div class="table-responsive">
@@ -207,8 +236,8 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                             <td class="text-end">
                                                 <div class="d-inline-flex gap-1">
                                                     <a href="student-detail.php" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                                    <a href="student-edit.php" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
-                                                    <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
+                                                    <a href="student-edit.php?id=<?= $single_student['student_id'] ?>" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
+                                                    <a href="delete_handle.php?id=<?= $single_student['student_id'] ?>" class="btn btn-sm btn-light border p-1 px-2 text-danger" title="Delete"><i class="bi bi-trash"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -245,7 +274,7 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteStudentModal" tabindex="-1" aria-labelledby="deleteStudentModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="deleteStudentModal" tabindex="-1" aria-labelledby="deleteStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-0 pb-0">
@@ -261,7 +290,7 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
