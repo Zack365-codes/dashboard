@@ -31,18 +31,18 @@
                     </button>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="dashboard.html" class="text-decoration-none text-muted">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="students.html" class="text-decoration-none text-muted">Students</a></li>
+                            <li class="breadcrumb-item"><a href="index.php" class="text-decoration-none text-muted">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="students.php" class="text-decoration-none text-muted">Students</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Student Detail</li>
                         </ol>
                     </nav>
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
-                    <a href="student-edit.html" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1">
+                    <a href="students.php" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1">
                         <i class="bi bi-pencil"></i> Edit Student
                     </a>
-                    <a href="students.html" class="btn btn-sm btn-light border d-inline-flex align-items-center gap-1">
+                    <a href="students.php" class="btn btn-sm btn-light border d-inline-flex align-items-center gap-1">
                         <i class="bi bi-arrow-left"></i> Back to List
                     </a>
                 </div>
@@ -74,7 +74,7 @@
                                 <button class="btn btn-sm btn-outline-secondary" onclick="window.print()">
                                     <i class="bi bi-printer me-1"></i> Print Profile
                                 </button>
-                                <a href="student-edit.html" class="btn btn-sm btn-primary">
+                                <a href="students.php" class="btn btn-sm btn-primary">
                                     <i class="bi bi-pencil me-1"></i> Edit Details
                                 </a>
                             </div>
@@ -236,7 +236,7 @@
                                     </p>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <a href="students.html" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to All Students</a>
+                                    <a href="students.php" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to All Students</a>
                                 </div>
                             </div>
                         </div>

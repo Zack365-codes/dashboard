@@ -105,7 +105,7 @@ $total = $ts_row[0]['total_students'];
                         </p>
                     </div>
                     <div class="d-flex gap-2">
-                        <a href="student-create.html" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                        <a href="student-create.php" class="btn btn-primary d-inline-flex align-items-center gap-2">
                             <i class="bi bi-plus-lg"></i>
                             <span>Add New Student</span>
                         </a>
@@ -190,7 +190,7 @@ $total = $ts_row[0]['total_students'];
                                                 <div class="d-flex align-items-center gap-2">
                                                     <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Alex">
                                                     <div>
-                                                        <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none"><?= $single_student['first_name']  . " " . $single_student['last_name']  ?></a>
+                                                        <a href="student-detail.php" class="fw-semibold text-dark text-decoration-none"><?= $single_student['first_name']  . " " . $single_student['last_name']  ?></a>
                                                         <div class="small text-muted"><?= $single_student['email'] ?></div>
                                                     </div>
                                                 </div>
@@ -203,8 +203,8 @@ $total = $ts_row[0]['total_students'];
                                             <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><?= $single_student['status'] ?></span></td>
                                             <td class="text-end">
                                                 <div class="d-inline-flex gap-1">
-                                                    <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                                    <a href="student-edit.php" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
+                                                    <a href="student-detail.php" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
+                                                    <a href="student-edit.php?id=<?= $single_student['student_id'] ?>" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
                                                     <a href="delete_handle.php?id=<?= $single_student['student_id'] ?>" class="btn btn-sm btn-light border p-1 px-2 text-danger" title="Delete"><i class="bi bi-trash"></i></a>
                                                 </div>
                                             </td>
